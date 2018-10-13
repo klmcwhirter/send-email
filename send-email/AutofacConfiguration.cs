@@ -1,7 +1,7 @@
 using System;
 using System.IO;
-using System.Net.Mail;
 using Autofac;
+using MailKit.Net.Smtp;
 using NLog;
 
 namespace send_email
@@ -19,7 +19,7 @@ namespace send_email
             builder.RegisterType<BodyBuilder>();
             builder.RegisterType<MessageBuilder>();
             builder.RegisterType<MessageSender>();
-            // builder.RegisterType<BodyBuilder>();
+
             builder.RegisterType<Program>();
 
             var container = builder.Build();

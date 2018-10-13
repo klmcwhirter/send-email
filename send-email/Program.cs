@@ -58,7 +58,7 @@ namespace send_email
                         var body = BodyBuilder.Build(opts, TextReader);
                         var message = MessageBuilder.Build(opts, body);
                         var success = MessageSender.Send(opts, message);
-                        return success.Result ? 0 : 255;
+                        return success ? 0 : 255;
                     },
                     (errors) =>
                     {

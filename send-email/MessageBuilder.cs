@@ -1,20 +1,23 @@
-using System.Net.Mail;
 using System.Text;
+using MimeKit;
 
 namespace send_email
 {
     public class MessageBuilder
     {
-        public MailMessage Build(SendEmailClo opts, string body)
+        public MimeMessage Build(SendEmailClo opts, string body)
         {
-            var rc = new MailMessage(opts.From, opts.To)
+            var rc = new MimeMessage
             {
-                Body = body,
-                BodyEncoding = Encoding.UTF8,
-                IsBodyHtml = true,
+                Body = new TextPart("html") { Text = body },
                 Subject = opts.Subject,
-                SubjectEncoding = Encoding.UTF8
             };
+
+            opts.From.SetInternetAddressList(rc.From);
+            rc.Sender = new MailboxAddress(rc.From[0]?.ToString());
+
+            opts.To.SetInternetAddressList(rc.To);
+
             return rc;
         }
     }
